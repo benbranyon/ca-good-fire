@@ -93,3 +93,13 @@ uploads/
 .nx/
 .gitmodules
 .git/modules/
+
+# Package managers
+pnpm-lock.yaml
+yarn.lock
+
+# TypeScript
+*.tsbuildinfo
+
+# Vercel
+.vercel

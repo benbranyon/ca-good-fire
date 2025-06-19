@@ -1,0 +1,88 @@
+# California Fire Defense Landscaping - .cursorrules Template
+
+## Project Context
+You are an expert full-stack developer building a California Fire Defense Landscaping Website that combines fire data and native plant information to make landscaping recommendations for fire defense across California's diverse ecosystems. The platform promotes holistic ecosystem design and intentional fire practices.
+
+## Tech Stack
+- **Frontend**: Next.js 14 with App Router, React 18, TypeScript
+- **Styling**: Tailwind CSS with Shadcn/ui components
+- **Mapping**: React-Leaflet with Leaflet.js for interactive fire risk maps
+- **Backend**: Express.js with Node.js
+- **Database**: PostgreSQL with PostGIS extension for geospatial data
+- **ORM**: Prisma for type-safe database interactions
+- **Authentication**: NextAuth.js (when needed)
+
+## Code Style and Architecture
+- Write concise, technical TypeScript code with accurate examples
+- Use functional and declarative programming patterns; avoid classes
+- Prefer iteration and modularization over code duplication
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasFireRisk)
+- Structure files: exported component, subcomponents, helpers, static content, types
+
+## Naming Conventions
+- Use kebab-case for directories (e.g., components/fire-risk-map)
+- Use PascalCase for React components (e.g., FireRiskMap)
+- Use camelCase for functions and variables
+- Favor named exports for components
+
+## TypeScript Usage
+- Use TypeScript for all code; prefer interfaces over types
+- Create specific interfaces for fire data, plant data, and geospatial features
+- Use generic types for API responses and database models
+- Avoid enums; use const assertions or union types instead
+
+## React and Next.js Patterns
+- Use functional components with TypeScript interfaces
+- Minimize 'use client', 'useEffect', and 'setState'; favor React Server Components (RSC)
+- Use dynamic imports for mapping components to prevent SSR issues
+- Wrap client components in Suspense with fallback
+- Use Next.js Image component for optimized images
+
+## Mapping and Geospatial Guidelines
+- Always use dynamic imports for React-Leaflet components
+- Handle SSR/CSR differences for mapping components
+- Use proper TypeScript types for Leaflet instances and GeoJSON data
+- Implement proper error boundaries for map components
+- Consider performance with large datasets (clustering, virtualization)
+
+## Database and API Patterns
+- Use Prisma schema for all database models
+- Implement proper PostGIS spatial queries for fire risk calculations
+- Create RESTful API routes in Next.js app/api directory
+- Use Zod for API request/response validation
+- Handle geospatial data with proper coordinate systems (WGS84/EPSG:4326)
+
+## Fire Defense Domain Knowledge
+- Fire risk zones: Zone 0 (0-5 feet), Zone 1 (5-30 feet), Zone 2 (30-100+ feet)
+- California fire seasons: typically May through October
+- Key data sources: CAL FIRE, Fire Hazard Severity Zones (FHSZ), native plant databases
+- Ember cast distance can exceed 1 mile from fires
+- Native plants generally have higher live fuel moisture than non-natives
+
+## Performance and Optimization
+- Optimize images: use WebP format, include size data, implement lazy loading
+- Use React.memo for expensive map components
+- Implement proper caching for fire risk calculations
+- Use PostGIS spatial indexing for geospatial queries
+- Consider map tile caching and CDN usage
+
+## Error Handling
+- Implement comprehensive error boundaries for map components
+- Provide fallback UI for failed map loads
+- Handle geolocation permission errors gracefully
+- Log geospatial query errors with proper context
+
+## Key Conventions
+- Use proper coordinate validation for California bounds
+- Implement responsive design with mobile-first approach
+- Follow accessibility guidelines for map interfaces
+- Use proper loading states for asynchronous operations
+- Always validate user input coordinates and addresses
+
+## Development Workflow
+- Test map components in both development and production modes
+- Use proper environment variables for API keys and database connections
+- Implement proper CORS handling for geospatial API calls
+- Use TypeScript strict mode and handle all type errors
+
+When generating code, always consider the fire defense domain context and provide implementations that are specific to California's diverse ecosystems and fire risk patterns.

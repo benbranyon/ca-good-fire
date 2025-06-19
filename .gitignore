@@ -81,3 +81,15 @@ map-cache/
 
 # Uploaded files (if you implement file uploads)
 uploads/
+
+# --- Monorepo & Next.js additions ---
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+**/out/
+**/.cache/
+.turbo/
+.nx/
+.gitmodules
+.git/modules/

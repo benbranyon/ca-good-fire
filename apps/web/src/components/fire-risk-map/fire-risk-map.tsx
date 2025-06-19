@@ -20,10 +20,10 @@ export function FireRiskMap({
   initialCenter = { lat: 36.7783, lng: -119.4179 }, // California center
   initialZoom = 6,
   bounds = {
-    north: 42.0095,
-    south: 32.5121,
-    east: -114.1312,
-    west: -124.4096
+    north: 42.0,
+    south: 32.5,
+    east: -114.1,
+    west: -124.4
   },
   fireHazardLayers = [],
   onMapClick,

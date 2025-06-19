@@ -30,12 +30,12 @@ const sampleFireHazardLayers: FireHazardLayer[] = [
   }
 ];
 
-// California bounds
+// California bounds - corrected coordinates
 const californiaBounds: MapBounds = {
-  north: 42.0095,
-  south: 32.5121,
-  east: -114.1312,
-  west: -124.4096
+  north: 42.0,
+  south: 32.5,
+  east: -114.1,
+  west: -124.4
 };
 
 // Major California cities for reference
@@ -67,7 +67,7 @@ export function FireRiskMapExample() {
     <div className="space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          California Fire Defense Landscaping
+          California Fire Risk Assessment Map
         </h1>
         <p className="text-gray-600 mb-4">
           Interactive fire risk map for California&apos;s diverse ecosystems

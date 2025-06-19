@@ -64,14 +64,24 @@ function MapInitializer({
   const map = useMap();
 
   useEffect(() => {
-    // Set bounds to California
-    map.setMaxBounds([
-      [bounds.south, bounds.west],
-      [bounds.north, bounds.east]
-    ]);
+    // Set bounds to California with proper coordinates
+    const californiaBounds = [
+      [bounds.south, bounds.west], // Southwest
+      [bounds.north, bounds.east]  // Northeast
+    ] as L.LatLngBoundsLiteral;
+
+    // Set max bounds to prevent users from panning outside California
+    map.setMaxBounds(californiaBounds);
     
-    // Set initial view
-    map.setView([initialCenter.lat, initialCenter.lng], initialZoom);
+    // Use fitBounds to properly center and zoom to show all of California
+    map.fitBounds(californiaBounds, {
+      padding: [20, 20], // Add some padding
+      maxZoom: 10 // Don't zoom in too much when fitting bounds
+    });
+
+    // Set minimum and maximum zoom levels
+    map.setMinZoom(5);
+    map.setMaxZoom(15);
   }, [map, bounds, initialCenter, initialZoom]);
 
   return null;
@@ -147,6 +157,8 @@ export function FireRiskMapClient({
       doubleClickZoom={true}
       scrollWheelZoom={true}
       dragging={true}
+      minZoom={5}
+      maxZoom={15}
     >
       {/* Map initialization */}
       <MapInitializer

@@ -43,4 +43,3 @@ A comprehensive platform for creating fire-resistant landscapes using native Cal
 - Weather APIs for fire risk assessment
 - Geospatial services for location analysis
 
-For detailed setup instructions, see the Phase 1 Development Guide.

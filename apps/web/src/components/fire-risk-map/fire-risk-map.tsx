@@ -42,6 +42,7 @@ export function FireRiskMap({
 
   const handleMapClick = useCallback((lat: number, lng: number) => {
     try {
+      console.log('FireRiskMap: Handling map click at', lat, lng);
       onMapClick?.(lat, lng);
     } catch (err) {
       console.error('Error handling map click:', err);
@@ -51,6 +52,7 @@ export function FireRiskMap({
 
   const handleBoundsChange = useCallback((newBounds: MapBounds) => {
     try {
+      console.log('FireRiskMap: Handling bounds change', newBounds);
       setCurrentBounds(newBounds);
       onBoundsChange?.(newBounds);
     } catch (err) {
@@ -60,22 +62,25 @@ export function FireRiskMap({
   }, [onBoundsChange]);
 
   const handleLayerToggle = useCallback((layerId: string, isActive: boolean) => {
+    console.log('FireRiskMap: Toggling layer', layerId, 'to', isActive);
     setActiveLayers(prev => {
       if (isActive) {
-        const layer = fireHazardLayers.find(l => l.id === layerId);
+        const layer = fireHazardLayers.find((l: FireHazardLayer) => l.id === layerId);
         return layer ? [...prev, layer] : prev;
       } else {
-        return prev.filter(l => l.id !== layerId);
+        return prev.filter((l: FireHazardLayer) => l.id !== layerId);
       }
     });
   }, [fireHazardLayers]);
 
   const handleError = useCallback((errorMessage: string) => {
+    console.error('FireRiskMap: Error occurred:', errorMessage);
     setError(errorMessage);
     setIsLoading(false);
   }, []);
 
   const handleLoadingState = useCallback((loading: boolean) => {
+    console.log('FireRiskMap: Loading state changed to', loading);
     setIsLoading(loading);
     if (loading) {
       setError(null);
@@ -83,7 +88,15 @@ export function FireRiskMap({
   }, []);
 
   return (
-    <div className={`relative w-full ${className}`} style={{ height }}>
+    <div 
+      className={`relative w-full ${className}`} 
+      style={{ 
+        height,
+        minHeight: '400px', // Ensure minimum height
+        position: 'relative',
+        overflow: 'hidden' // Prevent any overflow issues
+      }}
+    >
       <FireRiskMapErrorBoundary onError={handleError}>
         <Suspense fallback={<FireRiskMapLoading />}>
           <FireRiskMapClient

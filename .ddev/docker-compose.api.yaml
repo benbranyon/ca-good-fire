@@ -1,0 +1,18 @@
+services:
+  api:
+    container_name: "ddev-${DDEV_SITENAME}-api"
+    image: python:3.12-slim
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    restart: "no"
+    ports:
+      - "8000"
+    environment:
+      - VIRTUAL_HOST=api.${DDEV_SITENAME}.${DDEV_TLD}
+      - HTTP_EXPOSE=80:8000
+      - HTTPS_EXPOSE=443:8000
+    volumes:
+      - "../apps/api:/app:cached"
+    working_dir: /app
+    command: bash -c "pip install --no-cache-dir -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"

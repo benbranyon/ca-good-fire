@@ -34,6 +34,11 @@ export default function MapView() {
 
     mapRef.current.addControl(new NavigationControl(), "top-right");
 
+    mapRef.current.on("load", () => {
+      mapRef.current?.setPaintProperty("water", "fill-color", "#a0c8f0");
+      mapRef.current?.setPaintProperty("waterway", "line-color", "#a0c8f0");
+    });
+
     return () => {
       mapRef.current?.remove();
       mapRef.current = null;

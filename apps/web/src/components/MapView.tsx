@@ -37,6 +37,9 @@ export default function MapView() {
     mapRef.current.on("load", () => {
       mapRef.current?.setPaintProperty("water", "fill-color", "#a0c8f0");
       mapRef.current?.setPaintProperty("waterway", "line-color", "#a0c8f0");
+      // Placeholder tint so forest reads distinctly from open ground until
+      // real fuel/vegetation data replaces this generic OSM landcover layer.
+      mapRef.current?.setPaintProperty("landcover_wood", "fill-color", "#cadfc2");
     });
 
     return () => {

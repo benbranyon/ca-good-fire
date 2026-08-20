@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Map, NavigationControl } from "maplibre-gl";
+import { Map, NavigationControl, setWorkerUrl } from "maplibre-gl";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+
+// Turbopack mishandles maplibre-gl's worker (it hashes it into an asset
+// without its sibling maplibre-gl-shared.mjs, so the worker fails on its
+// first import and no vector tiles ever load). Both files are copied into
+// public/ unbundled and loaded from there instead.
+// https://github.com/vercel/next.js/issues/86495
+setWorkerUrl("/maplibre-gl-worker.mjs");
 
 // Rough bounding box covering Calaveras and Tuolumne counties, CA.
 const COUNTIES_BOUNDS: [[number, number], [number, number]] = [
@@ -20,18 +27,7 @@ export default function MapView() {
 
     mapRef.current = new Map({
       container: containerRef.current,
-      style: {
-        version: 8,
-        sources: {
-          osm: {
-            type: "raster",
-            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-            tileSize: 256,
-            attribution: "&copy; OpenStreetMap contributors",
-          },
-        },
-        layers: [{ id: "osm", type: "raster", source: "osm" }],
-      },
+      style: "https://tiles.openfreemap.org/styles/positron",
       bounds: COUNTIES_BOUNDS,
       fitBoundsOptions: { padding: 20 },
     });

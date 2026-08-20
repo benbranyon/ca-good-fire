@@ -36,6 +36,11 @@ yarn-error.log*
 # vercel
 .vercel
 
+# maplibre-gl's worker: Turbopack mishandles its bundling (see MapView.tsx),
+# so these are committed as-is from node_modules rather than built.
+!/public/maplibre-gl-worker.mjs
+!/public/maplibre-gl-shared.mjs
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

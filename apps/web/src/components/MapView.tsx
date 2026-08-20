@@ -25,6 +25,7 @@ export default function MapView() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const [is3D, setIs3D] = useState(false);
+  const [showBuildings, setShowBuildings] = useState(false);
   const [controlContainer, setControlContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -48,6 +49,11 @@ export default function MapView() {
       // Placeholder tint so forest reads distinctly from open ground until
       // real fuel/vegetation data replaces this generic OSM landcover layer.
       mapRef.current?.setPaintProperty("landcover_wood", "fill-color", "#cadfc2");
+      // Higher-contrast than the default near-invisible gray, since
+      // structures matter a lot for wildfire risk context.
+      mapRef.current?.setPaintProperty("building", "fill-color", "#f2c14e");
+      mapRef.current?.setPaintProperty("building", "fill-outline-color", "#c9971f");
+      mapRef.current?.setLayoutProperty("building", "visibility", "none");
 
       // Terrain: slope/aspect are directly relevant to fire behavior, so
       // elevation context is worth having even before real fuels data is in.
@@ -91,6 +97,22 @@ export default function MapView() {
     setIs3D(!is3D);
   };
 
+  const toggleBuildings = () => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const turningOn = !showBuildings;
+    map.setLayoutProperty("building", "visibility", turningOn ? "visible" : "none");
+    setShowBuildings(turningOn);
+
+    // The style's layer minzoom (12) is lower than the actual building tile
+    // data's minzoom (13) — below 13 there's nothing to draw regardless of
+    // visibility, so use 13 as the real threshold, not the style's.
+    if (turningOn && map.getZoom() < 13) {
+      map.easeTo({ zoom: 14, duration: 800 });
+    }
+  };
+
   return (
     <>
       <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
@@ -104,6 +126,22 @@ export default function MapView() {
               onClick={toggle3D}
             >
               <span className="maplibregl-ctrl-icon" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              title={showBuildings ? "Hide buildings" : "Show buildings"}
+              onClick={toggleBuildings}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 22 22"
+                fill={showBuildings ? "#33b5e5" : "#333"}
+                aria-hidden="true"
+              >
+                <path d="M4 20V9l7-5 7 5v11h-4v-6H8v6H4z" />
+              </svg>
             </button>
           </div>,
           controlContainer,
